@@ -8,7 +8,7 @@ import TooltipExtends from '@/components/common/Tooltip'
 
 import './assets/main.css'
 
-// window.addEventListener('contextmenu', (e) => e.preventDefault(), false)
+window.addEventListener('contextmenu', (e) => e.preventDefault(), false)
 
 Vue.use(PiniaVuePlugin)
 Vue.use(TooltipExtends)
