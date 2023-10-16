@@ -5,7 +5,7 @@
 		"tauri-serve": "tauri dev",
 		"tauri-build-mac-m1": "tauri build --target aarch64-apple-darwin",
 		"tauri-build-mac-x86_64": "tauri build --target x86_64-apple-darwin",
-		"tauri-build-win-x86_64": "tauri build --target x86_64-pc-windows-msvc.exe",
+		"tauri-build-win-x86_64": "tauri build --target x86_64-pc-windows-msvc",
 		"preview": "vite preview --port 4173",
 		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
 		"serve-mac": "vite --mode mac",
