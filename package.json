@@ -1,0 +1,42 @@
+{
+	"name": "image-compress",
+	"version": "0.0.0",
+	"scripts": {
+		"tauri-serve": "tauri dev",
+		"tauri-build-mac-m1": "tauri build --target aarch64-apple-darwin",
+		"tauri-build-mac-x86_64": "tauri build --target x86_64-apple-darwin",
+		"tauri-build-win-x86_64": "tauri build --target x86_64-pc-windows-msvc.exe",
+		"preview": "vite preview --port 4173",
+		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+		"serve-mac": "vite --mode mac",
+		"serve-windows": "vite --mode windows && tauri dev",
+		"build-mac": "vite build --mode mac",
+		"build-windows": "vite build --mode windows"
+	},
+	"dependencies": {
+		"@tauri-apps/api": "^1.4.0",
+		"@vueuse/core": "^10.5.0",
+		"axios": "^1.5.1",
+		"element-ui": "^2.15.14",
+		"pinia": "^2.0.16",
+		"vue": "^2.7.7",
+		"vue-router": "^3.5.4"
+	},
+	"devDependencies": {
+		"@rushstack/eslint-patch": "^1.1.0",
+		"@tauri-apps/cli": "^1.4.0",
+		"@vitejs/plugin-legacy": "^2.0.0",
+		"@vitejs/plugin-vue2": "^1.1.2",
+		"@vue/eslint-config-prettier": "^7.0.0",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.5.0",
+		"eslint-plugin-vue": "^9.0.0",
+		"prettier": "^2.5.1",
+		"rollup-plugin-copy": "^3.5.0",
+		"sass": "^1.69.0",
+		"terser": "^5.14.2",
+		"unplugin-vue-components": "^0.25.2",
+		"vite": "^4.4.11",
+		"vite-plugin-svg-icons": "^2.0.1"
+	}
+}

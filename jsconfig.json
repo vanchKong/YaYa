@@ -1,0 +1,34 @@
+{
+	"compilerOptions": {
+		"strict": false,
+		"baseUrl": "./",
+		"target": "esnext",
+		"module": "esnext",
+		"isolatedModules": true,
+		"jsx": "preserve",
+		// "importsNotUsedAsValues": "error",
+		// For `<script setup>`
+		// See <https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#preserve-value-imports>
+		// "preserveValueImports": true,
+		"useDefineForClassFields": true,
+		"allowJs": true,
+
+		"moduleResolution": "Node",
+
+		// "esModuleInterop": true,
+		// "resolveJsonModule": true,
+		// "lib": ["ESNext", "DOM"],
+		// "skipLibCheck": true,
+		// "noEmit": true,
+		"paths": {
+			"@/*": ["src/*"],
+			"@c/*": ["src/components/*"],
+			"@u/*": ["utils/*"],
+			"@a/*": ["api/*"],
+			"@s/*": ["styles/*"]
+		}
+	},
+	"vueCompilerOptions": {
+		"target": 2.7
+	}
+}
