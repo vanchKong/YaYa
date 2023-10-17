@@ -299,7 +299,7 @@ export default {
 			const tinyFile = await imageTiny(item.originU8File, this.qulity)
 			this.fileList[index].compressed = true
 			this.fileList[index].rate = `${(((item.originU8File.byteLength - tinyFile.size) * 100) / item.originU8File.byteLength).toFixed(2)}%`
-			this.fileList[index].compressSize = `${tinyFile.size / this.unit} KB`
+			this.fileList[index].compressSize = `${(tinyFile.size / this.unit).toFixed(2)} KB`
 			this.handleSaveFile(tinyFile, afterPath)
 		},
 		async compressSource(file, originPath) {
@@ -313,7 +313,7 @@ export default {
 			let fileItem = {
 				id: this.getUuid(),
 				name: fullFileName,
-				originSize: `${file.byteLength / this.unit} KB`,
+				originSize: `${(file.byteLength / this.unit).toFixed(2)} KB`,
 				compressSize: ``,
 				originU8File: file,
 				rate: '0%',
@@ -326,7 +326,7 @@ export default {
 			// console.log(tinyFile)
 			fileItem.loading = false
 			fileItem.compressed = true
-			fileItem.compressSize = `${tinyFile.size / this.unit} KB`
+			fileItem.compressSize = `${(tinyFile.size / this.unit).toFixed(2)} KB`
 			fileItem.rate = `${(((file.byteLength - tinyFile.size) * 100) / file.byteLength).toFixed(2)}%`
 			this.handleSaveFile(tinyFile, afterPath)
 		},
