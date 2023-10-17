@@ -85,12 +85,14 @@ export default {
 			suffix: '',
 			qulity: localStorage.getItem('qulity') || 80,
 			pathSplit: '/',
+			unit: 1000,
 		}
 	},
 	created() {
 		console.log(navigator.userAgent)
 		if (navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
 			this.pathSplit = '\\'
+			this.unit = 1024
 			console.log(this.pathSplit)
 		}
 	},
@@ -290,28 +292,28 @@ export default {
 			const originPath = item.originPath
 			const fullFileName = originPath.split(this.pathSplit).slice(-1)[0]
 			const fileType = fullFileName.split('.').slice(-1)[0]
-			const fileName = fullFileName.split('.').slice(0,-1).join('.')
+			const fileName = fullFileName.split('.').slice(0, -1).join('.')
 			const path = originPath.split(this.pathSplit).slice(0, -1)
 			const afterPath = `${path.join(this.pathSplit)}${this.pathSplit}${this.prefix}${fileName}${this.suffix}.${fileType}`
 
 			const tinyFile = await imageTiny(item.originU8File, this.qulity)
 			this.fileList[index].compressed = true
 			this.fileList[index].rate = `${(((item.originU8File.byteLength - tinyFile.size) * 100) / item.originU8File.byteLength).toFixed(2)}%`
-			this.fileList[index].compressSize = `${tinyFile.size / 1000} KB`
+			this.fileList[index].compressSize = `${tinyFile.size / this.unit} KB`
 			this.handleSaveFile(tinyFile, afterPath)
 		},
 		async compressSource(file, originPath) {
 			console.log(originPath)
 			const fullFileName = originPath.split(this.pathSplit).slice(-1)[0]
 			const fileType = fullFileName.split('.').slice(-1)[0]
-			const fileName = fullFileName.split('.').slice(0,-1).join('.')
+			const fileName = fullFileName.split('.').slice(0, -1).join('.')
 			const path = originPath.split(this.pathSplit).slice(0, -1)
 			// console.log(path,`${path.join(this.pathSplit)}`)
 			const afterPath = `${path.join(this.pathSplit)}${this.pathSplit}${this.prefix}${fileName}${this.suffix}.${fileType}`
 			let fileItem = {
 				id: this.getUuid(),
 				name: fullFileName,
-				originSize: `${file.byteLength / 1000} KB`,
+				originSize: `${file.byteLength / this.unit} KB`,
 				compressSize: ``,
 				originU8File: file,
 				rate: '0%',
@@ -324,7 +326,7 @@ export default {
 			// console.log(tinyFile)
 			fileItem.loading = false
 			fileItem.compressed = true
-			fileItem.compressSize = `${tinyFile.size / 1000} KB`
+			fileItem.compressSize = `${tinyFile.size / this.unit} KB`
 			fileItem.rate = `${(((file.byteLength - tinyFile.size) * 100) / file.byteLength).toFixed(2)}%`
 			this.handleSaveFile(tinyFile, afterPath)
 		},
