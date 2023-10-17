@@ -55,7 +55,7 @@
 			</p>
 		</div>
 		<div class="footer-box">
-			<span> 输出：原始路径替换 </span>
+			<span> 输出方式：原始路径替换 </span>
 			<div>
 				输出质量：
 				<select name="qulity" id="qulity" v-model="qulity" @change="qulityChange">
@@ -84,6 +84,14 @@ export default {
 			prefix: '',
 			suffix: '',
 			qulity: localStorage.getItem('qulity') || 80,
+			pathSplit: '/',
+		}
+	},
+	created() {
+		console.log(navigator.userAgent)
+		if (navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
+			this.pathSplit = '\\'
+			console.log(this.pathSplit)
 		}
 	},
 	async mounted() {
@@ -228,7 +236,7 @@ export default {
 		},
 		async dropFile(event) {
 			this.dragStatus = false
-			// console.log(event.payload)
+			// console.log(event)
 			const dirList = event.payload
 			dirList.forEach((dirPath) => {
 				this.readDir(dirPath)
@@ -246,7 +254,7 @@ export default {
 					contentInFolder
 						.filter((item) => !item.name.startsWith('.'))
 						.forEach((item) => {
-							if (['jpeg', 'jpg', 'png', 'gif'].includes(item.name.split('/').slice(-1)[0].split('.').slice(-1))) {
+							if (['jpeg', 'jpg', 'png', 'gif'].includes(item.name.split(this.pathSplit).slice(-1)[0].split('.').slice(-1))) {
 								this.readFile(item.path)
 							} else {
 								this.readDir(item.path)
@@ -254,12 +262,13 @@ export default {
 						})
 				})
 				.catch((err) => {
+					console.log(err)
 					// dirPath实际为文件路径，而不是文件夹路径
-					if (err.indexOf('Not a directory') != -1) {
-						const fullFileName = dirPath.split('/').slice(-1)
-						const fileType = fullFileName[0].split('.').slice(-1)
+					if (err.indexOf('Not a directory') != -1 || err.indexOf('目录名称无效') != -1) {
+						const fullFileName = dirPath.split(this.pathSplit).slice(-1)[0]
+						const fileType = fullFileName.split('.').slice(-1)[0]
 						// console.log(fileType[0])
-						if (['jpeg', 'jpg', 'png', 'gif'].includes(fileType[0].toLocaleLowerCase())) {
+						if (['jpeg', 'jpg', 'png', 'gif'].includes(fileType.toLocaleLowerCase())) {
 							this.readFile(dirPath)
 						}
 					}
@@ -279,11 +288,11 @@ export default {
 			const index = this.fileList.findIndex((fileItem) => fileItem.id === item.id)
 
 			const originPath = item.originPath
-			const fullFileName = originPath.split('/').slice(-1)
-			const fileType = fullFileName[0].split('.').slice(-1)
-			const fileName = fullFileName[0].split('.')[0]
-			const path = originPath.split('/').slice(0, -1)
-			const afterPath = `${path.join('/')}/${this.prefix}${fileName}${this.suffix}.${fileType}`
+			const fullFileName = originPath.split(this.pathSplit).slice(-1)[0]
+			const fileType = fullFileName.split('.').slice(-1)[0]
+			const fileName = fullFileName.split('.').slice(0,-1).join('.')
+			const path = originPath.split(this.pathSplit).slice(0, -1)
+			const afterPath = `${path.join(this.pathSplit)}${this.pathSplit}${this.prefix}${fileName}${this.suffix}.${fileType}`
 
 			const tinyFile = await imageTiny(item.originU8File, this.qulity)
 			this.fileList[index].compressed = true
@@ -292,14 +301,16 @@ export default {
 			this.handleSaveFile(tinyFile, afterPath)
 		},
 		async compressSource(file, originPath) {
-			const fullFileName = originPath.split('/').slice(-1)
-			const fileType = fullFileName[0].split('.').slice(-1)
-			const fileName = fullFileName[0].split('.')[0]
-			const path = originPath.split('/').slice(0, -1)
-			const afterPath = `${path.join('/')}/${this.prefix}${fileName}${this.suffix}.${fileType}`
+			console.log(originPath)
+			const fullFileName = originPath.split(this.pathSplit).slice(-1)[0]
+			const fileType = fullFileName.split('.').slice(-1)[0]
+			const fileName = fullFileName.split('.').slice(0,-1).join('.')
+			const path = originPath.split(this.pathSplit).slice(0, -1)
+			// console.log(path,`${path.join(this.pathSplit)}`)
+			const afterPath = `${path.join(this.pathSplit)}${this.pathSplit}${this.prefix}${fileName}${this.suffix}.${fileType}`
 			let fileItem = {
 				id: this.getUuid(),
-				name: fullFileName[0],
+				name: fullFileName,
 				originSize: `${file.byteLength / 1000} KB`,
 				compressSize: ``,
 				originU8File: file,
