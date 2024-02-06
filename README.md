@@ -1,35 +1,11 @@
-# image-compress
+# YaYa
 
-This template should help get you started developing with Vue 3 in Vite.
+基于 `vue` + `tauri` 开发的图片压缩软件，支持 windows、mac。
 
-## Recommended IDE Setup
+YaYa，就是鸭鸭，鸭缩的鸭。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+# 说明
 
-## Customize configuration
+仅因个人兴趣而开发，说实话还是比较简陋的，如果大家喜欢，或许后续会完善功能。
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+目前功能：拖入文件或文件夹，自动压缩符合 jpg、jpeg、gif、png 格式的资源，并且在源位置直接覆盖替换，在软件不被关闭的情况下，可以撤销某一个资源的压缩。支持自定义压缩质量，质量越高，压缩率越低。
